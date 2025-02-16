@@ -5,8 +5,8 @@ import { Rates } from '../types/CurrencyAPI';
 
 interface DropdownBoxProps {
   title: string,
-  rates: Rates,
-  value?: string,
+  rates?: Rates,
+  value: string,
   onSelectCurrency?: (currency: string) => void
 }
 

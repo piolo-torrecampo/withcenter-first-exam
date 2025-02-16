@@ -20,8 +20,8 @@ const InputBox: FC<InputBoxProps> = ({currencyCode, value, onChangeAmount}) => {
           placeholder='Enter amount'
           value={value}
           id={id}
-          onChange={(e) => onChangeAmount(e.target.value)}
-          maxLength="50"
+          onChange={(e) => onChangeAmount(Number(e.target.value))}
+          maxLength={50}
           onKeyDown={
             (e) => {
               if (

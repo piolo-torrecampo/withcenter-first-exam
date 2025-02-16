@@ -7,12 +7,12 @@ import BackgroundWaves from './components/BackgroundWaves';
  
 
 function App() {
-  const [apiData, setApiData] = useState(null)
-  const [rates, setRates] = useState<Rates | null>(null)
+  const [apiData, setApiData] = useState<Record<string, number> | undefined>();
+  const [rates, setRates] = useState<Rates>()
   const [toCurrencyCode, setToCurrencyCode] = useState<string>('USD')
   const [fromCurrencyCode, setFromCurrencyCode] = useState<string>('USD')
   const [amount, setAmount] = useState<number>(0);
-  const [totalAmount, setTotalAmount] = useState<number>()
+  const [totalAmount, setTotalAmount] = useState<string>('0');
 
   // get rates from api
   useEffect(() => {
@@ -52,12 +52,19 @@ function App() {
   
       if (to && from) {
         const result = amount * (to / from);
-        setTotalAmount(result.toLocaleString('en-US', 'fullwide', { useGrouping: false, maximumFractionDigits: 2 }));
+        setTotalAmount(addGrouping(result));
       } else {
-        setTotalAmount(0);
+        setTotalAmount('0');
       }
     }
   }, [toCurrencyCode, fromCurrencyCode, amount, rates]);
+
+  const addGrouping = (amount: number) => {
+    return amount.toLocaleString('en-US', {
+      useGrouping: true,
+      maximumFractionDigits: 2
+    });
+  }
 
   // return currency rate
   const getCurrencyRate = (code: string) => {
@@ -76,28 +83,26 @@ function App() {
     }
   };
 
-  // return date and time
   const getDate = () => {
     const date = new Date();
-    const options = {
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',  
+      month: 'long',      
+      day: '2-digit',      
+      hour: '2-digit',    
+      minute: '2-digit',  
+      hour12: true         
     };
-
-    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-    return formattedDate
+  
+    const formattedDate = date.toLocaleDateString('en-US', options) + ' ' + date.toLocaleTimeString('en-US', options);
+    return formattedDate;
   }
-
-  // from currency dropdown
+  // set from currency code
   const fromCurrency = (code: string) => {
     setFromCurrencyCode(code);
   }
   
-  // to currency dropdown
+  // set to currency code
   const toCurrency = (code: string) => {
     setToCurrencyCode(code);
   }
