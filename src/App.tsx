@@ -83,20 +83,20 @@ function App() {
     }
   };
 
-  const getDate = () => {
-    const date = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',  
-      month: 'long',      
-      day: '2-digit',      
-      hour: '2-digit',    
-      minute: '2-digit',  
-      hour12: true         
-    };
-  
-    const formattedDate = date.toLocaleDateString('en-US', options) + ' ' + date.toLocaleTimeString('en-US', options);
-    return formattedDate;
-  }
+    const getDate = () => {
+      const date = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',  
+        month: 'long',      
+        day: '2-digit',      
+        hour: '2-digit',    
+        minute: '2-digit',  
+        hour12: true         
+      };
+    
+      const formattedDate = date.toLocaleDateString('en-US', options);
+      return formattedDate;
+    }
   // set from currency code
   const fromCurrency = (code: string) => {
     setFromCurrencyCode(code);
